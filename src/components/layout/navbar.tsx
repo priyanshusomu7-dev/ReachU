@@ -3,9 +3,9 @@
 import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, X } from "lucide-react"
+import { ChevronRight, Download, Menu } from "lucide-react"
 
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
@@ -13,6 +13,15 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Container } from "./container"
+import { cn } from "@/lib/utils"
+import {
+  GooglePlayButton,
+  AppStoreButton,
+  PLAY_STORE_URL,
+  DRIVER_APP_URL,
+  useCustomerAppUrl,
+  getDeviceCustomerAppUrl,
+} from "@/components/shared/app-store-badges"
 
 const navigation = [
   { name: "Services", href: "#services" },
@@ -24,6 +33,7 @@ const navigation = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
+  const customerAppUrl = useCustomerAppUrl()
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -35,67 +45,105 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${
+      className={cn(
+        "fixed top-0 inset-x-0 z-50 transition-all duration-200",
         isScrolled
-          ? "bg-background/80 backdrop-blur-md border-border shadow-sm py-3"
-          : "bg-background border-transparent py-5"
-      }`}
+          ? "bg-background/90 backdrop-blur-md border-b border-border shadow-xs py-2.5 sm:py-3"
+          : "bg-background/80 backdrop-blur-xs border-b border-border/40 sm:border-transparent py-3 sm:py-4"
+      )}
     >
-      <Container>
+      <Container className="px-4 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between" aria-label="Global">
-          <div className="flex lg:flex-1">
-            <Link href="/" className="-m-1.5 p-1.5 flex items-center">
+          {/* Brand Logo */}
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center">
               <Image 
                 src="/images/brand/reachu-logo.png" 
                 alt="ReachU Logo" 
-                width={150} 
-                height={50} 
-                className="h-10 w-auto object-contain"
+                width={140} 
+                height={45} 
+                className="h-8 sm:h-9 md:h-10 w-auto object-contain"
                 priority
               />
             </Link>
           </div>
           
-          <div className="flex lg:hidden">
+          {/* Mobile menu trigger */}
+          <div className="flex items-center lg:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger className={buttonVariants({ variant: "ghost", className: "-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-foreground" })}>
+              <SheetTrigger className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/80 bg-muted/40 text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:scale-95">
                 <span className="sr-only">Open main menu</span>
-                <Menu className="h-6 w-6" aria-hidden="true" />
+                <Menu className="h-5 w-5" aria-hidden="true" />
               </SheetTrigger>
-              <SheetContent side="right" className="w-full sm:max-w-sm">
-                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                <div className="flex items-center justify-between">
-                  <Link href="/" className="-m-1.5 p-1.5 flex items-center" onClick={() => setIsOpen(false)}>
-                    <Image 
-                      src="/images/brand/reachu-logo.png" 
-                      alt="ReachU Logo" 
-                      width={120} 
-                      height={40} 
-                      className="h-8 w-auto object-contain"
-                    />
-                  </Link>
+              <SheetContent side="right" className="w-[88vw] max-w-sm p-6 flex flex-col justify-between overflow-y-auto bg-background">
+                <div>
+                  {/* Drawer Header */}
+                  <div className="flex items-center justify-between pb-4 border-b border-border/60 pr-8">
+                    <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                    <Link href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
+                      <Image 
+                        src="/images/brand/reachu-logo.png" 
+                        alt="ReachU Logo" 
+                        width={120} 
+                        height={38} 
+                        className="h-7 w-auto object-contain"
+                      />
+                    </Link>
+                  </div>
+
+                  {/* Drawer Navigation Links */}
+                  <div className="py-6 space-y-1">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-3 mb-2">
+                      Navigation
+                    </p>
+                    {navigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className="flex items-center justify-between rounded-xl px-3.5 py-3 text-base font-semibold text-foreground transition-colors hover:bg-muted active:bg-muted/80"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <span>{item.name}</span>
+                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-                <div className="mt-6 flow-root">
-                  <div className="-my-6 divide-y divide-border">
-                    <div className="space-y-2 py-6">
-                      {navigation.map((item) => (
-                        <Link
-                          key={item.name}
-                          href={item.href}
-                          className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground hover:bg-muted"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                    <div className="py-6 flex flex-col gap-3">
-                      <Link href="#driver" onClick={() => setIsOpen(false)} className={buttonVariants({ variant: "outline", className: "w-full justify-center" })}>
-                        Become a Driver
-                      </Link>
-                      <Link href="#download" onClick={() => setIsOpen(false)} className={buttonVariants({ className: "w-full justify-center" })}>
-                        Download App
-                      </Link>
+
+                {/* Drawer Footer Actions */}
+                <div className="pt-4 border-t border-border/60 space-y-4">
+                  <div className="flex flex-col gap-2.5">
+                    <a 
+                      href={DRIVER_APP_URL} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      onClick={() => setIsOpen(false)} 
+                      className={cn(buttonVariants({ variant: "outline" }), "w-full h-11 rounded-xl justify-center font-semibold text-sm")}
+                    >
+                      Become a Driver
+                    </a>
+                    <a 
+                      href={customerAppUrl} 
+                      onClick={(e) => {
+                        e.currentTarget.href = getDeviceCustomerAppUrl()
+                        setIsOpen(false)
+                      }}
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className={cn(buttonVariants(), "w-full h-11 rounded-xl justify-center font-bold text-sm shadow-sm")}
+                    >
+                      <Download className="mr-2 h-4 w-4" />
+                      Download Customer App
+                    </a>
+                  </div>
+
+                  <div className="pt-1">
+                    <p className="text-xs font-semibold text-muted-foreground mb-2 text-center sm:text-left">
+                      Available on Mobile:
+                    </p>
+                    <div className="flex flex-col gap-2">
+                      <GooglePlayButton className="w-full justify-center" />
+                      <AppStoreButton className="w-full justify-center" />
                     </div>
                   </div>
                 </div>
@@ -103,25 +151,40 @@ export function Navbar() {
             </Sheet>
           </div>
 
-          <div className="hidden lg:flex lg:gap-x-8">
+          {/* Desktop Navigation Links */}
+          <div className="hidden lg:flex lg:items-center lg:gap-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
+                className="text-sm font-semibold text-foreground/80 hover:text-primary transition-colors py-1"
               >
                 {item.name}
               </Link>
             ))}
           </div>
 
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-3">
-            <Link href="#driver" className={buttonVariants({ variant: "ghost" })}>
+          {/* Desktop Call to Actions */}
+          <div className="hidden lg:flex lg:items-center lg:gap-3">
+            <a
+              href={DRIVER_APP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants({ variant: "ghost", className: "font-semibold" })}
+            >
               Become a Driver
-            </Link>
-            <Link href="#download" className={buttonVariants()}>
+            </a>
+            <a 
+              href={customerAppUrl} 
+              onClick={(e) => {
+                e.currentTarget.href = getDeviceCustomerAppUrl()
+              }}
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={buttonVariants({ className: "font-bold shadow-md shadow-primary/20 hover:shadow-primary/30" })}
+            >
               Download App
-            </Link>
+            </a>
           </div>
         </nav>
       </Container>

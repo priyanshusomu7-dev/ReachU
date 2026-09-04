@@ -2,7 +2,7 @@
 
 import { Container } from "@/components/layout/container"
 import { motion } from "motion/react"
-import { Button } from "@/components/ui/button"
+import { DRIVER_APP_URL } from "@/components/shared/app-store-badges"
 
 export function DriverCta() {
   return (
@@ -28,9 +28,14 @@ export function DriverCta() {
               Turn your vehicle into a business. Enjoy flexible hours, reliable earnings, and become part of a network that keeps the city moving.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" className="h-14 px-8 text-base font-bold text-primary hover:bg-white">
+              <a
+                href={DRIVER_APP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-14 items-center justify-center rounded-xl bg-white px-8 text-base font-bold text-primary shadow-lg hover:bg-white/95 transition-all"
+              >
                 Become a Driver
-              </Button>
+              </a>
             </div>
           </motion.div>
         </div>

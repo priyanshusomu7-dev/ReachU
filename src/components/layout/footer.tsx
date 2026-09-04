@@ -16,8 +16,9 @@ export function Footer() {
       { name: "Contact", href: "#" },
     ],
     app: [
-      { name: "Download Customer App", href: "#" },
-      { name: "Driver / Partner App", href: "#" },
+      { name: "Google Play Store", href: "https://play.google.com/store/apps/details?id=com.reachu.user.app" },
+      { name: "Apple App Store", href: "https://apps.apple.com/in/app/reach-u/id6806275349" },
+      { name: "Driver / Partner App", href: "https://play.google.com/store/apps/details?id=com.reachu.driver" },
     ],
     legal: [
       { name: "Privacy Policy", href: "#" },

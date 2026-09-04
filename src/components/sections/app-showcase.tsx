@@ -6,9 +6,11 @@ import { motion } from "motion/react"
 import { Smartphone, Download, MapPin, Truck, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import { PLAY_STORE_URL, DRIVER_APP_URL, useCustomerAppUrl, getDeviceCustomerAppUrl } from "@/components/shared/app-store-badges"
 
 export function AppShowcase() {
   const [activeTab, setActiveTab] = useState<"customer" | "driver">("customer")
+  const customerAppUrl = useCustomerAppUrl()
 
   return (
     <section className="py-20 md:py-32 bg-muted/30">
@@ -168,10 +170,20 @@ export function AppShowcase() {
               </ul>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="h-14 px-8 gap-2">
+                <a
+                  href={activeTab === "customer" ? customerAppUrl : DRIVER_APP_URL}
+                  onClick={(e) => {
+                    if (activeTab === "customer") {
+                      e.currentTarget.href = getDeviceCustomerAppUrl()
+                    }
+                  }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-base font-bold text-primary-foreground shadow-md hover:bg-primary/90 transition-all gap-2"
+                >
                   <Download className="w-5 h-5" />
                   {activeTab === "customer" ? "Download Customer App" : "Download Partner App"}
-                </Button>
+                </a>
                 <Button size="lg" variant="outline" className="h-14 px-6 group">
                   Learn more
                   <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
