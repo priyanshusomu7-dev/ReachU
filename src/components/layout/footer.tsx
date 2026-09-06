@@ -72,13 +72,13 @@ export function Footer() {
   ]
 
   const quickLinks = [
-    { name: "About Us", href: "/#why-reachu" },
+    { name: "About Us", href: "/about" },
     { name: "Contact Us", href: "/contact" },
-    { name: "Our Services", href: "/#services" },
+    { name: "Our Services", href: "/services" },
     { name: "User Ban", href: "/userban" },
-    { name: "Terms & Conditions", href: "/#terms" },
+    { name: "Terms & Conditions", href: "/terms" },
     { name: "Help & Support", href: "/contact" },
-    { name: "Privacy Policy", href: "/#privacy" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
   ]
 
   return (
@@ -274,17 +274,17 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Reach U Delivery Express LLP. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link href="#privacy" className="hover:text-white transition-colors hover:underline underline-offset-4">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors hover:underline underline-offset-4">
               Privacy Policy
             </Link>
             <span className="h-3 w-px bg-neutral-700" />
-            <Link href="#terms" className="hover:text-white transition-colors hover:underline underline-offset-4">
+            <Link href="/terms" className="hover:text-white transition-colors hover:underline underline-offset-4">
               Terms &amp; Conditions
             </Link>
             <span className="h-3 w-px bg-neutral-700" />
-            <a href="mailto:support@reachu.co.in" className="hover:text-white transition-colors hover:underline underline-offset-4">
+            <Link href="/contact" className="hover:text-white transition-colors hover:underline underline-offset-4">
               Support
-            </a>
+            </Link>
           </div>
         </div>
       </Container>

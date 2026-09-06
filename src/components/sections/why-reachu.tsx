@@ -1,10 +1,10 @@
 "use client"
 
+import Link from "next/link"
 import { Container } from "@/components/layout/container"
 import { SectionHeading } from "@/components/shared/section-heading"
 import { motion } from "motion/react"
-import { Clock, ShieldCheck, Map, Truck } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Clock, ShieldCheck, Map, Truck, ArrowRight } from "lucide-react"
 
 const features = [
   {
@@ -66,9 +66,13 @@ export function WhyReachU() {
             </dl>
 
             <div className="mt-12">
-              <Button size="lg" className="h-12 px-8">
-                Learn More About Us
-              </Button>
+              <Link
+                href="/about"
+                className="inline-flex h-12 items-center gap-2 rounded-xl bg-primary px-8 font-bold text-sm text-primary-foreground shadow-sm transition-all hover:bg-primary/90 active:scale-95 cursor-pointer"
+              >
+                <span>Learn More About Us</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
 

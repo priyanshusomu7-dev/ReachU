@@ -317,22 +317,17 @@ export function Services() {
                 </div>
               </div>
 
-              {/* Card Footer with ReachU's signature sliding "Read More" button */}
+              {/* Card Footer with visible "Read More" button and interactive hover animation */}
               <div className="px-6 pb-6 sm:px-7 sm:pb-7 pt-2">
                 <button
                   type="button"
                   onClick={() => setSelectedService(service)}
                   aria-label={`Read more about ${service.title}`}
-                  className="relative inline-flex items-center overflow-hidden rounded-full border border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-white transition-all duration-300 group/btn cursor-pointer p-1 pr-4"
+                  className="group/btn relative inline-flex h-11 items-center gap-3 rounded-full border border-primary/30 bg-primary/5 pl-5 pr-2 text-primary font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 hover:bg-primary hover:text-white hover:border-primary hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
                 >
-                  {/* Icon Circle */}
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white shadow-sm transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:rotate-[-10deg]">
-                    <ArrowRight className="h-4 w-4" />
-                  </span>
-                  
-                  {/* Slide text */}
-                  <span className="ml-3 text-xs sm:text-sm font-bold tracking-wide transition-colors duration-300">
-                    Read More
+                  <span>Read More</span>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white shadow-xs transition-all duration-300 group-hover/btn:bg-white group-hover/btn:text-primary group-hover/btn:translate-x-1 group-hover/btn:scale-105">
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
                   </span>
                 </button>
               </div>
