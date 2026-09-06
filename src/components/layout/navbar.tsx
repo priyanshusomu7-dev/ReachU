@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sheet"
 import { Container } from "./container"
 import { cn } from "@/lib/utils"
+import { usePathname } from "next/navigation"
 import {
   GooglePlayButton,
   AppStoreButton,
@@ -24,13 +25,16 @@ import {
 } from "@/components/shared/app-store-badges"
 
 const navigation = [
-  { name: "Services", href: "#services" },
-  { name: "How It Works", href: "#how-it-works" },
-  { name: "Drive With Us", href: "#driver" },
-  { name: "About", href: "#why-reachu" },
+  { name: "Services", href: "/#services" },
+  { name: "How It Works", href: "/#how-it-works" },
+  { name: "Drive With Us", href: "/#driver" },
+  { name: "About", href: "/#why-reachu" },
+  { name: "Contact", href: "/contact" },
+  { name: "User Ban", href: "/userban" },
 ]
 
 export function Navbar() {
+  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
   const customerAppUrl = useCustomerAppUrl()
@@ -96,17 +100,25 @@ export function Navbar() {
                     <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-3 mb-2">
                       Navigation
                     </p>
-                    {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        className="flex items-center justify-between rounded-xl px-3.5 py-3 text-base font-semibold text-foreground transition-colors hover:bg-muted active:bg-muted/80"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <span>{item.name}</span>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                      </Link>
-                    ))}
+                    {navigation.map((item) => {
+                      const isActive = pathname === item.href
+                      return (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className={cn(
+                            "flex items-center justify-between rounded-xl px-3.5 py-3 text-base font-semibold transition-colors active:bg-muted/80",
+                            isActive
+                              ? "bg-primary/10 text-primary font-bold"
+                              : "text-foreground hover:bg-muted"
+                          )}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <span>{item.name}</span>
+                          <ChevronRight className={cn("h-4 w-4", isActive ? "text-primary" : "text-muted-foreground")} />
+                        </Link>
+                      )
+                    })}
                   </div>
                 </div>
 
@@ -152,16 +164,24 @@ export function Navbar() {
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex lg:items-center lg:gap-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-semibold text-foreground/80 hover:text-primary transition-colors py-1"
-              >
-                {item.name}
-              </Link>
-            ))}
+          <div className="hidden lg:flex lg:items-center lg:gap-x-7">
+            {navigation.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    "text-sm font-semibold transition-colors py-1 relative",
+                    isActive
+                      ? "text-primary font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:rounded-full"
+                      : "text-foreground/80 hover:text-primary"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              )
+            })}
           </div>
 
           {/* Desktop Call to Actions */}

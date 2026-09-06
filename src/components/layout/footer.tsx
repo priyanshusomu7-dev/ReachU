@@ -27,18 +27,19 @@ function WhatsAppIcon({ className = "h-4 w-4 shrink-0" }: { className?: string }
 
 export function Footer() {
   const services = [
-    { name: "Parcel Delivery", href: "#services" },
-    { name: "Home Shifting", href: "#services" },
-    { name: "Rental & Local Transport", href: "#services" },
+    { name: "Parcel Delivery", href: "/#services" },
+    { name: "Home Shifting", href: "/#services" },
+    { name: "Rental & Local Transport", href: "/#services" },
   ]
 
   const quickLinks = [
-    { name: "About Us", href: "#why-reachu" },
-    { name: "Contact Us", href: "mailto:support@reachu.co.in" },
-    { name: "Our Services", href: "#services" },
-    { name: "Terms & Conditions", href: "#terms" },
-    { name: "Help & Support", href: "mailto:support@reachu.co.in" },
-    { name: "Privacy Policy", href: "#privacy" },
+    { name: "About Us", href: "/#why-reachu" },
+    { name: "Contact Us", href: "/contact" },
+    { name: "Our Services", href: "/#services" },
+    { name: "User Ban", href: "/userban" },
+    { name: "Terms & Conditions", href: "/#terms" },
+    { name: "Help & Support", href: "/contact" },
+    { name: "Privacy Policy", href: "/#privacy" },
   ]
 
   return (
