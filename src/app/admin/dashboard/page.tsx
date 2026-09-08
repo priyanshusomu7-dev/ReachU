@@ -32,13 +32,13 @@ export default async function AdminDashboardPage() {
   const recentOffers = await getOffers()
   const auditLogs = await getAuditLogs(8)
 
-  const activeAnnouncementsCount = announcements.filter(
-    (a) => a.isActive && a.status === "ACTIVE"
+  const activeAnnouncementsCount = (announcements as any[]).filter(
+    (a: any) => a.isActive && a.status === "ACTIVE"
   ).length
 
   // Filter offers for the summary tab
-  const activeOffers = recentOffers.filter((o) => o.computedStatus === "ACTIVE").slice(0, 5)
-  const scheduledOffers = recentOffers.filter((o) => o.computedStatus === "SCHEDULED").slice(0, 5)
+  const activeOffers = (recentOffers as any[]).filter((o: any) => o.computedStatus === "ACTIVE").slice(0, 5)
+  const scheduledOffers = (recentOffers as any[]).filter((o: any) => o.computedStatus === "SCHEDULED").slice(0, 5)
 
   const formatDate = (date: Date | string) => {
     try {
@@ -218,7 +218,7 @@ export default async function AdminDashboardPage() {
                 </div>
               ) : (
                 <div className="divide-y divide-border/60">
-                  {recentOffers.slice(0, 5).map((offer) => {
+                  {(recentOffers as any[]).slice(0, 5).map((offer: any) => {
                     const discount =
                       offer.discountType === "PERCENTAGE"
                         ? `${offer.discountValue}% OFF`
@@ -287,7 +287,7 @@ export default async function AdminDashboardPage() {
                 </p>
               ) : (
                 <div className="space-y-4">
-                  {auditLogs.map((log) => {
+                  {(auditLogs as any[]).map((log: any) => {
                     let details = ""
                     try {
                       if (log.metadata) {

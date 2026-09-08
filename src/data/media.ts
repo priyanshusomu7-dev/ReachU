@@ -1,9 +1,8 @@
 import { prisma } from "@/lib/db"
-import { Prisma } from "@prisma/client"
 
 export async function getMediaList(search?: string) {
   try {
-    const where: Prisma.MediaWhereInput = {}
+    const where: any = {}
     if (search) {
       where.OR = [
         { filename: { contains: search } },

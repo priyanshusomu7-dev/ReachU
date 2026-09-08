@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/db"
 import { computeOfferStatus } from "@/lib/validations/offer"
-import { Prisma } from "@prisma/client"
 
 export async function getOffers(params?: {
   search?: string
@@ -9,7 +8,7 @@ export async function getOffers(params?: {
   service?: string
 }) {
   try {
-    const where: Prisma.OfferWhereInput = {
+    const where: any = {
       isDeleted: false,
     }
 
@@ -41,13 +40,13 @@ export async function getOffers(params?: {
     })
 
     // Compute real-time status and filter if requested
-    const offers = rawOffers.map((o) => ({
+    const offers = (rawOffers as any[]).map((o: any) => ({
       ...o,
       computedStatus: computeOfferStatus(o),
     }))
 
     if (params?.status && params.status !== "ALL") {
-      return offers.filter((o) => o.computedStatus === params.status)
+      return offers.filter((o: any) => o.computedStatus === params.status)
     }
 
     return offers
@@ -97,7 +96,7 @@ export async function getActiveOffers(limit: number = 6) {
       take: limit,
     })
 
-    return rawOffers.map((o) => ({
+    return (rawOffers as any[]).map((o: any) => ({
       ...o,
       computedStatus: "ACTIVE" as const,
     }))
@@ -125,7 +124,7 @@ export async function getOfferStats() {
     let expiredCount = 0
     let draftCount = 0
 
-    for (const o of all) {
+    for (const o of (all as any[])) {
       const computed = computeOfferStatus(o)
       if (computed === "ACTIVE") activeCount++
       else if (computed === "SCHEDULED") scheduledCount++
