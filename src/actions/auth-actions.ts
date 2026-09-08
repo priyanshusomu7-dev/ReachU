@@ -53,12 +53,17 @@ export async function loginAdminAction(
       return { success: false, error: "Invalid email or password" }
     }
 
-    // Update last login timestamp
-    await prisma.adminUser.update({
-      where: { id: admin.id },
-      data: { lastLoginAt: new Date() },
-    })
+    // Update last login timestamp (non-blocking for SQLite concurrency resilience)
+    try {
+      await prisma.adminUser.update({
+        where: { id: admin.id },
+        data: { lastLoginAt: new Date() },
+      })
+    } catch (updateErr) {
+      console.warn("Could not update lastLoginAt (non-fatal):", updateErr)
+    }
 
+    // Set secure session cookie
     await setAdminSessionCookie({
       adminId: admin.id,
       email: admin.email,
@@ -66,16 +71,24 @@ export async function loginAdminAction(
       role: admin.role,
     })
 
-    await logAuditAction({
-      adminId: admin.id,
-      adminEmail: admin.email,
-      action: "LOGIN_SUCCESS",
-      entityType: "AdminUser",
-      entityId: admin.id,
-    })
-  } catch (error) {
+    // Write audit log (non-blocking for SQLite concurrency resilience)
+    try {
+      await logAuditAction({
+        adminId: admin.id,
+        adminEmail: admin.email,
+        action: "LOGIN_SUCCESS",
+        entityType: "AdminUser",
+        entityId: admin.id,
+      })
+    } catch (auditErr) {
+      console.warn("Could not write login audit log (non-fatal):", auditErr)
+    }
+  } catch (error: any) {
     console.error("Login action error:", error)
-    return { success: false, error: "An unexpected error occurred during login. Please try again." }
+    return {
+      success: false,
+      error: error?.message || "An unexpected error occurred during login. Please try again.",
+    }
   }
 
   redirect(callbackUrl)
