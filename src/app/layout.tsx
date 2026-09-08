@@ -4,6 +4,9 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SmoothScroll } from "@/components/layout/smooth-scroll";
+import { AnnouncementBar } from "@/components/layout/announcement-bar";
+import { getActiveAnnouncement } from "@/data/announcements";
+import { headers } from "next/headers";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -34,17 +37,36 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerList = await headers();
+  const pathname = headerList.get("x-pathname") || "";
+  const isAdmin = pathname.startsWith("/admin");
+
+  // If visiting the Admin panel, render dedicated admin container without public Navbar/Footer
+  if (isAdmin) {
+    return (
+      <html lang="en" className={`${plusJakarta.variable} antialiased`} suppressHydrationWarning>
+        <body className="min-h-screen font-sans bg-background text-foreground antialiased">
+          {children}
+        </body>
+      </html>
+    );
+  }
+
+  // Public site layout
+  const announcement = await getActiveAnnouncement();
+
   return (
     <html lang="en" className={`${plusJakarta.variable} antialiased`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col font-sans">
         <SmoothScroll>
           <Navbar />
           <main className="flex-1 pt-20">
+            <AnnouncementBar announcement={announcement} />
             {children}
           </main>
           <Footer />

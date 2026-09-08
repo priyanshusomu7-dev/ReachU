@@ -52,8 +52,8 @@ export function Navbar() {
       className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-200",
         isScrolled
-          ? "bg-background/90 backdrop-blur-md border-b border-border shadow-xs py-2.5 sm:py-3"
-          : "bg-background/80 backdrop-blur-xs border-b border-border/40 sm:border-transparent py-3 sm:py-4"
+          ? "bg-background border-b border-border shadow-xs py-2 sm:py-2.5"
+          : "bg-background border-b border-border/40 py-2.5 sm:py-3"
       )}
     >
       <Container className="px-4 sm:px-6 lg:px-8">
@@ -64,9 +64,9 @@ export function Navbar() {
               <Image 
                 src="/images/brand/reachu-logo.png" 
                 alt="ReachU Logo" 
-                width={140} 
-                height={45} 
-                className="h-8 sm:h-9 md:h-10 w-auto object-contain"
+                width={240} 
+                height={84} 
+                className="h-12 sm:h-14 md:h-16 w-auto object-contain"
                 priority
               />
             </Link>
@@ -88,9 +88,9 @@ export function Navbar() {
                       <Image 
                         src="/images/brand/reachu-logo.png" 
                         alt="ReachU Logo" 
-                        width={120} 
-                        height={38} 
-                        className="h-7 w-auto object-contain"
+                        width={180} 
+                        height={63} 
+                        className="h-10 sm:h-12 w-auto object-contain"
                       />
                     </Link>
                   </div>
