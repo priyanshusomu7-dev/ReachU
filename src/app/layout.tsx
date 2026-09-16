@@ -45,6 +45,19 @@ export default async function RootLayout({
   const headerList = await headers();
   const pathname = headerList.get("x-pathname") || "";
   const isAdmin = pathname.startsWith("/admin");
+  const isLiveLocation = pathname.startsWith("/live_location");
+
+  // Live tracking is a standalone full-screen map opened from a shared WhatsApp
+  // link, so it skips the public Navbar/Footer/announcement chrome entirely.
+  if (isLiveLocation) {
+    return (
+      <html lang="en" className={`${plusJakarta.variable} antialiased`} suppressHydrationWarning>
+        <body className="min-h-screen overflow-hidden font-sans bg-background text-foreground antialiased">
+          {children}
+        </body>
+      </html>
+    );
+  }
 
   // If visiting the Admin panel, render dedicated admin container without public Navbar/Footer
   if (isAdmin) {
