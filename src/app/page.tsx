@@ -6,7 +6,6 @@ import { Vehicles } from "@/components/sections/vehicles";
 import { WhyReachU } from "@/components/sections/why-reachu";
 import { AppShowcase } from "@/components/sections/app-showcase";
 import { DriverCta } from "@/components/sections/driver-cta";
-import { Statistics } from "@/components/sections/statistics";
 import { FinalCta } from "@/components/sections/final-cta";
 import { OffersSection } from "@/components/sections/offers-section";
 import { getActiveOffers } from "@/data/offers";
@@ -27,7 +26,6 @@ export default async function Home() {
       <WhyReachU />
       <AppShowcase />
       <DriverCta />
-      <Statistics />
       <FinalCta />
     </>
   );

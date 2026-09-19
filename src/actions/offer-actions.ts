@@ -89,6 +89,7 @@ export async function createOfferAction(data: OfferFormValues) {
     revalidatePath("/admin/offers")
     revalidatePath("/admin/dashboard")
     revalidatePath("/")
+    revalidatePath("/", "layout")
 
     return { success: true, data: newOffer }
   } catch (error: any) {
@@ -167,6 +168,7 @@ export async function updateOfferAction(id: string, data: OfferFormValues) {
     revalidatePath(`/admin/offers/${id}`)
     revalidatePath("/admin/dashboard")
     revalidatePath("/")
+    revalidatePath("/", "layout")
 
     return { success: true, data: updatedOffer }
   } catch (error: any) {
@@ -196,6 +198,7 @@ export async function toggleOfferActiveAction(id: string, isActive: boolean) {
     revalidatePath("/admin/offers")
     revalidatePath("/admin/dashboard")
     revalidatePath("/")
+    revalidatePath("/", "layout")
 
     return { success: true, isActive: offer.isActive }
   } catch (error: any) {
@@ -229,6 +232,7 @@ export async function deleteOfferAction(id: string) {
     revalidatePath("/admin/offers")
     revalidatePath("/admin/dashboard")
     revalidatePath("/")
+    revalidatePath("/", "layout")
 
     return { success: true }
   } catch (error: any) {
