@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db"
 import { requireAdminSession } from "@/lib/auth"
 import { offerFormSchema, OfferFormValues, computeOfferStatus } from "@/lib/validations/offer"
 import { logAuditAction } from "@/lib/audit"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 
 function slugify(text: string): string {
   return text
@@ -90,6 +90,8 @@ export async function createOfferAction(data: OfferFormValues) {
     revalidatePath("/admin/dashboard")
     revalidatePath("/")
     revalidatePath("/", "layout")
+    revalidateTag("offers", "max")
+    revalidateTag("announcements", "max")
 
     return { success: true, data: newOffer }
   } catch (error: any) {
@@ -169,6 +171,8 @@ export async function updateOfferAction(id: string, data: OfferFormValues) {
     revalidatePath("/admin/dashboard")
     revalidatePath("/")
     revalidatePath("/", "layout")
+    revalidateTag("offers", "max")
+    revalidateTag("announcements", "max")
 
     return { success: true, data: updatedOffer }
   } catch (error: any) {
@@ -199,6 +203,8 @@ export async function toggleOfferActiveAction(id: string, isActive: boolean) {
     revalidatePath("/admin/dashboard")
     revalidatePath("/")
     revalidatePath("/", "layout")
+    revalidateTag("offers", "max")
+    revalidateTag("announcements", "max")
 
     return { success: true, isActive: offer.isActive }
   } catch (error: any) {
@@ -233,6 +239,8 @@ export async function deleteOfferAction(id: string) {
     revalidatePath("/admin/dashboard")
     revalidatePath("/")
     revalidatePath("/", "layout")
+    revalidateTag("offers", "max")
+    revalidateTag("announcements", "max")
 
     return { success: true }
   } catch (error: any) {
@@ -287,6 +295,8 @@ export async function duplicateOfferAction(id: string) {
 
     revalidatePath("/admin/offers")
     revalidatePath("/admin/dashboard")
+    revalidateTag("offers", "max")
+    revalidateTag("announcements", "max")
 
     return { success: true, data: duplicated }
   } catch (error: any) {

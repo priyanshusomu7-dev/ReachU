@@ -4,7 +4,6 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SmoothScroll } from "@/components/layout/smooth-scroll";
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { getActiveAnnouncement } from "@/data/announcements";
 import { headers } from "next/headers";
 
@@ -77,9 +76,8 @@ export default async function RootLayout({
     <html lang="en" className={`${plusJakarta.variable} antialiased`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col font-sans">
         <SmoothScroll>
-          <Navbar />
-          <main className="flex-1 pt-20">
-            <AnnouncementBar announcement={announcement} />
+          <Navbar announcement={announcement} />
+          <main className="flex-1 pt-24 sm:pt-28 md:pt-30">
             {children}
           </main>
           <Footer />

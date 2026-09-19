@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/db"
 import { computeOfferStatus } from "@/lib/validations/offer"
+import { unstable_cache } from "next/cache"
+
 
 export async function getOffers(params?: {
   search?: string
@@ -81,7 +83,7 @@ export async function getOfferById(id: string) {
  * Retrieves public-facing active offers.
  * Used on the public website home page.
  */
-export async function getActiveOffers(limit: number = 6) {
+async function fetchActiveOffers(limit: number = 6) {
   try {
     const now = new Date()
     const rawOffers = await prisma.offer.findMany({
@@ -101,10 +103,18 @@ export async function getActiveOffers(limit: number = 6) {
       computedStatus: "ACTIVE" as const,
     }))
   } catch (error) {
-    console.error("Error in getActiveOffers:", error)
+    console.error("Error in fetchActiveOffers:", error)
     return []
   }
 }
+
+export const getActiveOffers = (limit: number = 6) =>
+  unstable_cache(
+    () => fetchActiveOffers(limit),
+    [`active-offers-${limit}`],
+    { revalidate: 60, tags: ["offers"] }
+  )()
+
 
 export async function getOfferStats() {
   try {

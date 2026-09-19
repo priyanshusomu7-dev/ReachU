@@ -47,7 +47,7 @@ export const servicesData: ServiceDetail[] = [
   {
     id: "parcel-delivery",
     title: "Parcel Delivery",
-    image: "/images/services/service-1.jpg",
+    image: "/images/services/parcel-delivery.jpg",
     badge: "Doorstep Express",
     description:
       "Send small to medium-sized parcels quickly within your city or across regions. Affordable pricing & door-to-door service.",
@@ -107,7 +107,7 @@ export const servicesData: ServiceDetail[] = [
   {
     id: "home-shifting",
     title: "Home Shifting",
-    image: "/images/services/service-2.jpg",
+    image: "/images/services/home-shifting.jpg",
     badge: "Complete Relocation",
     description:
       "Complete relocation solutions with professional movers, packing assistance, and safe transportation of all household goods.",
@@ -167,7 +167,7 @@ export const servicesData: ServiceDetail[] = [
   {
     id: "rental-transport",
     title: "Rental & Local Transport",
-    image: "/images/services/service-3.jpg",
+    image: "/images/services/rental-transport.jpg",
     badge: "Commercial & Bulk",
     description:
       "Book small to medium-sized trucks or loaders for rent on an hourly or full-day basis. Ideal for furniture shifting or bulk orders.",

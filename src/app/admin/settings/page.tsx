@@ -6,8 +6,10 @@ import { getAuditLogs } from "@/data/audit"
 export const dynamic = "force-dynamic"
 
 export default async function AdminSettingsPage() {
-  const settings = await getSiteSettings()
-  const auditLogs = await getAuditLogs(50)
+  const [settings, auditLogs] = await Promise.all([
+    getSiteSettings(),
+    getAuditLogs(50),
+  ])
 
   return <SettingsManager initialSettings={settings} auditLogs={auditLogs} />
 }

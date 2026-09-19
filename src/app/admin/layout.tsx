@@ -4,8 +4,6 @@ import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { AdminShell } from "@/components/admin/admin-shell"
 
-export const dynamic = "force-dynamic"
-
 export default async function AdminLayout({
   children,
 }: {
@@ -32,3 +30,5 @@ export default async function AdminLayout({
     </AdminShell>
   )
 }
+
+

@@ -26,11 +26,13 @@ import { getAdminSession } from "@/lib/auth"
 export const dynamic = "force-dynamic"
 
 export default async function AdminDashboardPage() {
-  const session = await getAdminSession()
-  const offerStats = await getOfferStats()
-  const announcements = await getAnnouncements()
-  const recentOffers = await getOffers()
-  const auditLogs = await getAuditLogs(8)
+  const [session, offerStats, announcements, recentOffers, auditLogs] = await Promise.all([
+    getAdminSession(),
+    getOfferStats(),
+    getAnnouncements(),
+    getOffers(),
+    getAuditLogs(8),
+  ])
 
   const activeAnnouncementsCount = (announcements as any[]).filter(
     (a: any) => a.isActive && a.status === "ACTIVE"

@@ -24,6 +24,8 @@ import {
   getDeviceCustomerAppUrl,
 } from "@/components/shared/app-store-badges"
 
+import { AnnouncementBar } from "./announcement-bar"
+
 const navigation = [
   { name: "Services", href: "/#services" },
   { name: "How It Works", href: "/#how-it-works" },
@@ -33,11 +35,16 @@ const navigation = [
   { name: "User Ban", href: "/userban" },
 ]
 
-export function Navbar() {
+export function Navbar({ announcement }: { announcement?: any }) {
   const pathname = usePathname()
   const [isScrolled, setIsScrolled] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
+  const [isBannerVisible, setIsBannerVisible] = React.useState(Boolean(announcement))
   const customerAppUrl = useCustomerAppUrl()
+
+  React.useEffect(() => {
+    setIsBannerVisible(Boolean(announcement))
+  }, [announcement])
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -48,16 +55,26 @@ export function Navbar() {
   }, [])
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 inset-x-0 z-50 transition-all duration-200",
-        isScrolled
-          ? "bg-background border-b border-border shadow-xs py-2 sm:py-2.5"
-          : "bg-background border-b border-border/40 py-2.5 sm:py-3"
+    <header className="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+      {/* Top Special Offer Banner */}
+      {announcement && isBannerVisible && (
+        <AnnouncementBar
+          announcement={announcement}
+          onDismiss={() => setIsBannerVisible(false)}
+        />
       )}
-    >
-      <Container className="px-4 sm:px-6 lg:px-8">
-        <nav className="flex items-center justify-between" aria-label="Global">
+
+      {/* Main Navigation Bar */}
+      <div
+        className={cn(
+          "transition-all duration-200",
+          isScrolled
+            ? "bg-background/95 backdrop-blur-md border-b border-border shadow-xs py-2 sm:py-2.5"
+            : "bg-background border-b border-border/40 py-2.5 sm:py-3"
+        )}
+      >
+        <Container className="px-4 sm:px-6 lg:px-8">
+          <nav className="flex items-center justify-between" aria-label="Global">
           {/* Brand Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
@@ -208,6 +225,7 @@ export function Navbar() {
           </div>
         </nav>
       </Container>
+      </div>
     </header>
   )
 }

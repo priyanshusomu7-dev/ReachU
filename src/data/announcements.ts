@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db"
+import { unstable_cache } from "next/cache"
 
 export async function getAnnouncements() {
   try {
@@ -11,7 +12,7 @@ export async function getAnnouncements() {
   }
 }
 
-export async function getActiveAnnouncement() {
+async function fetchActiveAnnouncement() {
   try {
     const now = new Date()
 
@@ -77,8 +78,15 @@ export async function getActiveAnnouncement() {
 
     return null
   } catch (error) {
-    console.error("Error in getActiveAnnouncement:", error)
+    console.error("Error in fetchActiveAnnouncement:", error)
     return null
   }
 }
+
+export const getActiveAnnouncement = unstable_cache(
+  fetchActiveAnnouncement,
+  ["active-announcement"],
+  { revalidate: 60, tags: ["announcements", "offers"] }
+)
+
 

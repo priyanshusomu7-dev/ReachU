@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db"
 import { requireAdminSession } from "@/lib/auth"
 import { announcementFormSchema, AnnouncementFormValues } from "@/lib/validations/announcement"
 import { logAuditAction } from "@/lib/audit"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 
 export async function createAnnouncementAction(data: AnnouncementFormValues) {
   try {
@@ -38,6 +38,7 @@ export async function createAnnouncementAction(data: AnnouncementFormValues) {
     revalidatePath("/admin/announcements")
     revalidatePath("/")
     revalidatePath("/", "layout")
+    revalidateTag("announcements", "max")
     return { success: true, data: announcement }
   } catch (error: any) {
     return { success: false, error: error.message || "Failed to create announcement" }
@@ -76,6 +77,7 @@ export async function updateAnnouncementAction(id: string, data: AnnouncementFor
     revalidatePath("/admin/announcements")
     revalidatePath("/")
     revalidatePath("/", "layout")
+    revalidateTag("announcements", "max")
     return { success: true, data: updated }
   } catch (error: any) {
     return { success: false, error: error.message || "Failed to update announcement" }
@@ -101,6 +103,7 @@ export async function toggleAnnouncementActiveAction(id: string, isActive: boole
     revalidatePath("/admin/announcements")
     revalidatePath("/")
     revalidatePath("/", "layout")
+    revalidateTag("announcements", "max")
     return { success: true }
   } catch (error: any) {
     return { success: false, error: error.message || "Failed to update status" }
@@ -123,6 +126,7 @@ export async function deleteAnnouncementAction(id: string) {
     revalidatePath("/admin/announcements")
     revalidatePath("/")
     revalidatePath("/", "layout")
+    revalidateTag("announcements", "max")
     return { success: true }
   } catch (error: any) {
     return { success: false, error: error.message || "Failed to delete announcement" }
