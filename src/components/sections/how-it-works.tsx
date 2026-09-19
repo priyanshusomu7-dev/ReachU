@@ -59,13 +59,13 @@ export function HowItWorks() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: index * 0.4, duration: 0.6 }}
               >
-                {/* Step Number Badge */}
-                <div className="absolute -top-4 -right-2 md:right-1/4 text-5xl font-bold text-muted/30 dark:text-muted/10 select-none pointer-events-none">
+                {/* Step Number Watermark - Clearly visible yet soft and eye-soothing */}
+                <div className="absolute -top-5 right-2 md:right-1/4 text-6xl md:text-7xl font-black text-primary/[0.14] select-none pointer-events-none font-mono">
                   {step.id}
                 </div>
 
                 {/* Icon Circle */}
-                <div className="relative z-10 w-24 h-24 rounded-full bg-background border-4 border-muted flex items-center justify-center mb-8 shadow-sm">
+                <div className="relative z-10 w-24 h-24 rounded-full bg-background border-4 border-muted flex items-center justify-center mb-6 shadow-sm">
                   <motion.div
                     className="absolute inset-0 rounded-full border-4 border-primary"
                     initial={{ scale: 0, opacity: 0 }}
@@ -74,9 +74,19 @@ export function HowItWorks() {
                     transition={{ delay: (index * 0.4) + 0.3, duration: 0.4 }}
                   />
                   <step.icon className="w-10 h-10 text-primary relative z-10" />
+
+                  {/* Step numbered pill badge */}
+                  <span className="absolute -bottom-2.5 px-2.5 py-0.5 rounded-full bg-primary text-primary-foreground text-[11px] font-bold shadow-xs z-20">
+                    {step.id}
+                  </span>
                 </div>
 
-                <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                {/* Step Indicator Label */}
+                <span className="inline-block text-xs font-bold uppercase tracking-wider text-primary/85 mb-1.5 mt-1">
+                  Step {step.id}
+                </span>
+
+                <h3 className="text-xl font-bold mb-2.5 text-foreground">{step.title}</h3>
                 <p className="text-muted-foreground leading-relaxed max-w-xs">
                   {step.description}
                 </p>
