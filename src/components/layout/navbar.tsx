@@ -27,12 +27,12 @@ import {
 import { AnnouncementBar } from "./announcement-bar"
 
 const navigation = [
-  { name: "Services", href: "/#services" },
-  { name: "How It Works", href: "/#how-it-works" },
-  { name: "Drive With Us", href: "/#driver" },
-  { name: "About", href: "/#why-reachu" },
-  { name: "Contact", href: "/contact" },
-  { name: "User Ban", href: "/userban" },
+  { name: "Home", href: "/", sectionId: "home" },
+  { name: "Services", href: "/#services", sectionId: "services" },
+  { name: "How It Works", href: "/#how-it-works", sectionId: "how-it-works" },
+  { name: "Drive With Us", href: "/#driver", sectionId: "driver" },
+  { name: "About", href: "/#why-reachu", sectionId: "why-reachu" },
+  { name: "Contact", href: "/contact", sectionId: "contact" },
 ]
 
 export function Navbar({ announcement }: { announcement?: any }) {
@@ -40,6 +40,7 @@ export function Navbar({ announcement }: { announcement?: any }) {
   const [isScrolled, setIsScrolled] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
   const [isBannerVisible, setIsBannerVisible] = React.useState(Boolean(announcement))
+  const [activeSection, setActiveSection] = React.useState<string>("home")
   const customerAppUrl = useCustomerAppUrl()
 
   React.useEffect(() => {
@@ -50,9 +51,59 @@ export function Navbar({ announcement }: { announcement?: any }) {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
     }
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // Scroll-spy active section observer for homepage sections
+  React.useEffect(() => {
+    if (pathname !== "/") return
+
+    const handleScrollSpy = () => {
+      const sectionIds = ["home", "services", "how-it-works", "why-reachu", "driver"]
+      const scrollPosition = window.scrollY + 180
+
+      if (window.scrollY < 120) {
+        setActiveSection("home")
+        return
+      }
+
+      let current = "home"
+      for (const id of sectionIds) {
+        const el = document.getElementById(id)
+        if (el) {
+          const top = el.offsetTop
+          if (scrollPosition >= top) {
+            current = id
+          }
+        }
+      }
+      setActiveSection(current)
+    }
+
+    handleScrollSpy()
+    window.addEventListener("scroll", handleScrollSpy, { passive: true })
+    return () => window.removeEventListener("scroll", handleScrollSpy)
+  }, [pathname])
+
+  const checkIsActive = (item: { name: string; href: string; sectionId?: string }) => {
+    if (pathname === "/contact") {
+      return item.href === "/contact"
+    }
+    if (pathname === "/about") {
+      return item.href === "/about" || item.sectionId === "why-reachu"
+    }
+    if (pathname === "/services") {
+      return item.href === "/services" || item.sectionId === "services"
+    }
+    if (pathname === "/") {
+      if (item.sectionId) {
+        return activeSection === item.sectionId
+      }
+      return activeSection === "home"
+    }
+    return pathname === item.href
+  }
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 transition-all duration-300">
@@ -77,7 +128,7 @@ export function Navbar({ announcement }: { announcement?: any }) {
           <nav className="flex items-center justify-between" aria-label="Global">
           {/* Brand Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center transition-transform duration-200 hover:scale-[1.03] active:scale-95">
               <Image 
                 src="/images/brand/reachu-logo.png" 
                 alt="ReachU Logo" 
@@ -92,7 +143,7 @@ export function Navbar({ announcement }: { announcement?: any }) {
           {/* Mobile menu trigger */}
           <div className="flex items-center lg:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/80 bg-muted/40 text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:scale-95">
+              <SheetTrigger className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/80 bg-muted/40 text-foreground transition-all duration-200 hover:bg-primary/10 hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:scale-95">
                 <span className="sr-only">Open main menu</span>
                 <Menu className="h-5 w-5" aria-hidden="true" />
               </SheetTrigger>
@@ -101,7 +152,7 @@ export function Navbar({ announcement }: { announcement?: any }) {
                   {/* Drawer Header */}
                   <div className="flex items-center justify-between pb-4 border-b border-border/60 pr-8">
                     <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                    <Link href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
+                    <Link href="/" className="flex items-center transition-transform hover:scale-[1.02]" onClick={() => setIsOpen(false)}>
                       <Image 
                         src="/images/brand/reachu-logo.png" 
                         alt="ReachU Logo" 
@@ -113,26 +164,26 @@ export function Navbar({ announcement }: { announcement?: any }) {
                   </div>
 
                   {/* Drawer Navigation Links */}
-                  <div className="py-6 space-y-1">
+                  <div className="py-6 space-y-1.5">
                     <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-3 mb-2">
                       Navigation
                     </p>
                     {navigation.map((item) => {
-                      const isActive = pathname === item.href
+                      const isActive = checkIsActive(item)
                       return (
                         <Link
                           key={item.name}
                           href={item.href}
                           className={cn(
-                            "flex items-center justify-between rounded-xl px-3.5 py-3 text-base font-semibold transition-colors active:bg-muted/80",
+                            "group flex items-center justify-between rounded-xl px-4 py-2.5 text-base font-medium transition-all duration-200",
                             isActive
-                              ? "bg-primary/10 text-primary font-bold"
-                              : "text-foreground hover:bg-muted"
+                              ? "bg-primary/5 text-primary font-bold border-l-2 border-primary"
+                              : "text-foreground/80 hover:bg-primary/5 hover:text-primary hover:translate-x-0.5"
                           )}
                           onClick={() => setIsOpen(false)}
                         >
                           <span>{item.name}</span>
-                          <ChevronRight className={cn("h-4 w-4", isActive ? "text-primary" : "text-muted-foreground")} />
+                          <ChevronRight className={cn("h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5", isActive ? "text-primary" : "text-muted-foreground")} />
                         </Link>
                       )
                     })}
@@ -147,7 +198,7 @@ export function Navbar({ announcement }: { announcement?: any }) {
                       target="_blank" 
                       rel="noopener noreferrer" 
                       onClick={() => setIsOpen(false)} 
-                      className={cn(buttonVariants({ variant: "outline" }), "w-full h-11 rounded-xl justify-center font-semibold text-sm")}
+                      className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-primary/30 bg-primary/5 px-4 text-sm font-bold text-primary transition-all duration-200 hover:bg-primary hover:text-white hover:border-primary active:scale-[0.98]"
                     >
                       Become a Driver
                     </a>
@@ -159,7 +210,7 @@ export function Navbar({ announcement }: { announcement?: any }) {
                       }}
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className={cn(buttonVariants(), "w-full h-11 rounded-xl justify-center font-bold text-sm shadow-sm")}
+                      className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-primary px-4 text-sm font-bold text-white shadow-md shadow-primary/20 transition-all duration-200 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 active:scale-[0.98]"
                     >
                       <Download className="mr-2 h-4 w-4" />
                       Download Customer App
@@ -181,18 +232,18 @@ export function Navbar({ announcement }: { announcement?: any }) {
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex lg:items-center lg:gap-x-7">
+          <div className="hidden lg:flex lg:items-center lg:gap-x-1">
             {navigation.map((item) => {
-              const isActive = pathname === item.href
+              const isActive = checkIsActive(item)
               return (
                 <Link
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "text-sm font-semibold transition-colors py-1 relative",
+                    "px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-all duration-200 relative select-none",
                     isActive
-                      ? "text-primary font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:rounded-full"
-                      : "text-foreground/80 hover:text-primary"
+                      ? "text-primary font-bold bg-primary/5 after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:bg-primary after:rounded-full"
+                      : "text-foreground/75 hover:text-primary hover:bg-primary/5"
                   )}
                 >
                   {item.name}
@@ -207,7 +258,7 @@ export function Navbar({ announcement }: { announcement?: any }) {
               href={DRIVER_APP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className={buttonVariants({ variant: "ghost", className: "font-semibold" })}
+              className="inline-flex h-10 items-center justify-center rounded-full border border-primary/30 bg-primary/5 px-4.5 text-sm font-bold text-primary transition-all duration-200 hover:bg-primary hover:text-white hover:border-primary shadow-2xs hover:shadow-primary/25 hover:scale-105 active:scale-95"
             >
               Become a Driver
             </a>
@@ -218,9 +269,10 @@ export function Navbar({ announcement }: { announcement?: any }) {
               }}
               target="_blank" 
               rel="noopener noreferrer" 
-              className={buttonVariants({ className: "font-bold shadow-md shadow-primary/20 hover:shadow-primary/30" })}
+              className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full bg-primary px-5 text-sm font-bold text-white shadow-md shadow-primary/25 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/35 transition-all duration-200 hover:scale-105 active:scale-95"
             >
-              Download App
+              <Download className="h-4 w-4" />
+              <span>Download App</span>
             </a>
           </div>
         </nav>

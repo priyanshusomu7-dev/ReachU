@@ -82,37 +82,37 @@ export function Footer() {
   ]
 
   return (
-    <footer className="relative border-t border-neutral-800 bg-[#0B0F19] text-white overflow-hidden" aria-labelledby="footer-heading">
+    <footer className="relative border-t border-slate-800 bg-[#0f172a] text-slate-200 overflow-hidden" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
 
-      {/* Subtle background ambient map pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.035] pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px]" 
-        aria-hidden="true" 
+      {/* Subtle brand ambient glow */}
+      <div
+        className="absolute inset-0 opacity-40 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(223,10,23,0.12),transparent_70%)]"
+        aria-hidden="true"
       />
 
       <Container className="relative z-10 pb-10 pt-16 sm:pt-20">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
-          
+
           {/* Brand & About Column */}
           <div className="space-y-6 sm:col-span-2 lg:col-span-4">
-            <Link href="/" className="inline-flex items-center rounded-xl bg-white px-3.5 py-2 shadow-md transition-transform hover:scale-[1.02]">
-              <Image 
-                src="/images/brand/reachu-logo.png" 
-                alt="ReachU Logo" 
-                width={150} 
-                height={50} 
+            <Link href="/" className="inline-flex items-center rounded-xl bg-white px-3.5 py-2 shadow-sm transition-transform hover:scale-[1.02]">
+              <Image
+                src="/images/brand/reachu-logo.png"
+                alt="ReachU Logo"
+                width={150}
+                height={50}
                 className="h-9 w-auto object-contain"
               />
             </Link>
-            <p className="text-sm leading-6 text-neutral-400 max-w-sm">
+            <p className="text-sm leading-6 text-slate-400 max-w-sm">
               Smart delivery for Smart Bharat. From instant parcels to complete home shifting, book the right vehicle at the right time.
             </p>
 
             <div className="pt-2">
-              <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-3">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
                 Download Mobile Apps
               </p>
               <div className="flex flex-wrap gap-2.5">
@@ -132,8 +132,8 @@ export function Footer() {
               </div>
 
               {/* Social Media Links from ReachU */}
-              <div className="mt-5 pt-4 border-t border-neutral-800/80">
-                <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-3">
+              <div className="mt-5 pt-4 border-t border-slate-800">
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
                   Follow Us
                 </p>
                 <div className="flex items-center gap-3">
@@ -144,7 +144,7 @@ export function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.name}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/80 bg-transparent text-white transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white hover:scale-110 active:scale-95"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700/80 bg-slate-800/80 text-slate-300 transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white hover:scale-110 active:scale-95"
                     >
                       <social.icon className="h-4 w-4" />
                     </a>
@@ -156,14 +156,14 @@ export function Footer() {
 
           {/* Address Column */}
           <div className="lg:col-span-3">
-            <h3 className="text-lg font-bold text-white tracking-tight mb-5">
+            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight mb-5">
               Address
             </h3>
-            <ul role="list" className="space-y-3.5 text-sm text-neutral-300">
+            <ul role="list" className="space-y-3.5 text-sm text-slate-300">
               {/* Location */}
               <li className="flex items-start gap-3 group">
                 <MapPin className="h-4 w-4 mt-1 shrink-0 text-primary transition-transform group-hover:scale-110" />
-                <span className="leading-snug text-neutral-300 group-hover:text-white transition-colors">
+                <span className="leading-snug text-slate-300 group-hover:text-white transition-colors">
                   flat no 430 M G colony congress road near by hotel Karim&apos;s kitchen
                 </span>
               </li>
@@ -173,7 +173,7 @@ export function Footer() {
                 <Phone className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:scale-110" />
                 <a
                   href="tel:8586876539"
-                  className="text-neutral-300 hover:text-white hover:underline underline-offset-4 decoration-primary transition-all"
+                  className="text-slate-300 hover:text-white hover:underline underline-offset-4 decoration-primary transition-all"
                 >
                   8586876539
                 </a>
@@ -186,7 +186,7 @@ export function Footer() {
                   href="https://wa.me/918586876539"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-neutral-300 hover:text-white hover:underline underline-offset-4 decoration-emerald-400 transition-all"
+                  className="text-slate-300 hover:text-white hover:underline underline-offset-4 decoration-emerald-400 transition-all"
                 >
                   8586876539
                 </a>
@@ -197,7 +197,7 @@ export function Footer() {
                 <Mail className="h-4 w-4 shrink-0 text-primary" />
                 <a
                   href="mailto:support@reachu.co.in"
-                  className="text-neutral-300 hover:text-white hover:underline underline-offset-4 decoration-primary transition-all"
+                  className="text-slate-300 hover:text-white hover:underline underline-offset-4 decoration-primary transition-all"
                 >
                   support@reachu.co.in
                 </a>
@@ -206,7 +206,7 @@ export function Footer() {
               {/* Hours */}
               <li className="flex items-center gap-3 group">
                 <Clock className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:scale-110" />
-                <span className="text-neutral-300 group-hover:text-white transition-colors">
+                <span className="text-slate-300 group-hover:text-white transition-colors">
                   12 am to 11 pm
                 </span>
               </li>
@@ -218,7 +218,7 @@ export function Footer() {
                   href="https://www.reachu.co.in"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-neutral-300 hover:text-white hover:underline underline-offset-4 decoration-sky-400 transition-all font-medium"
+                  className="text-slate-300 hover:text-white hover:underline underline-offset-4 decoration-sky-400 transition-all font-medium"
                 >
                   Reach U
                 </a>
@@ -228,7 +228,7 @@ export function Footer() {
 
           {/* Services Column */}
           <div className="lg:col-span-2">
-            <h3 className="text-lg font-bold text-white tracking-tight mb-5">
+            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight mb-5">
               Services
             </h3>
             <ul role="list" className="space-y-3.5">
@@ -236,7 +236,7 @@ export function Footer() {
                 <li key={service.name}>
                   <Link
                     href={service.href}
-                    className="group inline-flex items-center gap-2 text-sm text-neutral-300 transition-all duration-200 hover:text-white hover:underline underline-offset-4 decoration-primary"
+                    className="group inline-flex items-center gap-2 text-sm text-slate-300 transition-all duration-200 hover:text-white hover:underline underline-offset-4 decoration-primary"
                   >
                     <ChevronRight className="h-3.5 w-3.5 text-primary shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
                     <span>{service.name}</span>
@@ -248,7 +248,7 @@ export function Footer() {
 
           {/* Quick Links Column */}
           <div className="lg:col-span-3">
-            <h3 className="text-lg font-bold text-white tracking-tight mb-5">
+            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight mb-5">
               Quick Links
             </h3>
             <ul role="list" className="space-y-3.5">
@@ -256,7 +256,7 @@ export function Footer() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="group inline-flex items-center gap-2 text-sm text-neutral-300 transition-all duration-200 hover:text-white hover:underline underline-offset-4 decoration-primary"
+                    className="group inline-flex items-center gap-2 text-sm text-slate-300 transition-all duration-200 hover:text-white hover:underline underline-offset-4 decoration-primary"
                   >
                     <ChevronRight className="h-3.5 w-3.5 text-primary shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
                     <span>{link.name}</span>
@@ -269,7 +269,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Copyright and Legal Row */}
-        <div className="mt-14 border-t border-neutral-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
+        <div className="mt-14 border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p>
             &copy; {new Date().getFullYear()} Reach U Delivery Express LLP. All rights reserved.
           </p>
@@ -277,11 +277,11 @@ export function Footer() {
             <Link href="/privacy-policy" className="hover:text-white transition-colors hover:underline underline-offset-4">
               Privacy Policy
             </Link>
-            <span className="h-3 w-px bg-neutral-700" />
+            <span className="h-3 w-px bg-slate-700" />
             <Link href="/terms" className="hover:text-white transition-colors hover:underline underline-offset-4">
               Terms &amp; Conditions
             </Link>
-            <span className="h-3 w-px bg-neutral-700" />
+            <span className="h-3 w-px bg-slate-700" />
             <Link href="/contact" className="hover:text-white transition-colors hover:underline underline-offset-4">
               Support
             </Link>

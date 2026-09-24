@@ -10,7 +10,7 @@ import { GooglePlayButton, AppStoreButton, DRIVER_APP_URL, useCustomerAppUrl, ge
 export function Hero() {
   const customerAppUrl = useCustomerAppUrl()
   return (
-    <section className="relative overflow-hidden bg-background pt-4 pb-10 sm:pt-6 sm:pb-14 md:pt-8 md:pb-16 lg:pt-8 lg:pb-20">
+    <section id="home" className="relative overflow-hidden bg-background pt-4 pb-10 sm:pt-6 sm:pb-14 md:pt-8 md:pb-16 lg:pt-8 lg:pb-20">
       <Container className="relative max-w-[1440px] px-3 sm:px-6 lg:px-8 xl:px-12">
         <div className="relative overflow-hidden rounded-[28px] sm:rounded-[32px] lg:rounded-[36px] border bg-[linear-gradient(100deg,#ffffff_0%,#ffffff_39%,#fff2f1_100%)] shadow-md">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_45%_45%,rgba(223,10,23,0.08),transparent_32%),radial-gradient(circle_at_83%_55%,rgba(255,184,0,0.16),transparent_34%)]" />
