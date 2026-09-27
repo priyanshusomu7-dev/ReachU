@@ -92,7 +92,7 @@ export default function AdminLoginPage() {
               <Input
                 type="email"
                 required
-                placeholder="admin@reachu.co.in"
+                placeholder="admin@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
@@ -141,13 +141,6 @@ export default function AdminLoginPage() {
               )}
             </Button>
           </form>
-
-          {/* Dev Seed Credentials Hint */}
-          <div className="mt-6 pt-4 border-t border-border/60 text-center">
-            <p className="text-[11px] text-muted-foreground">
-              Development Access: <code className="font-mono text-primary font-semibold">admin@reachu.co.in</code> / <code className="font-mono text-primary font-semibold">Admin@ReachU2026!</code>
-            </p>
-          </div>
         </div>
 
         {/* Security Notice */}
