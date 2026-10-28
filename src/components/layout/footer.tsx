@@ -79,6 +79,7 @@ export function Footer() {
     { name: "Terms & Conditions", href: "/terms" },
     { name: "Help & Support", href: "/contact" },
     { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Data Deletion", href: "/data-deletion" },
   ]
 
   return (
